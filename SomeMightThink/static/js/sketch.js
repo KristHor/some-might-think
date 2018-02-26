@@ -11,7 +11,6 @@ var soundIsPlayed = false;
 var voiceDuration, duration;
 var timeoutID, crossOver, timeoutBtn;
 var chunks = [];
-var heading, ndColor;
 
 document.getElementById("reTake").addEventListener("click", backToVoc);
 document.getElementById("rec").addEventListener("click", start);
@@ -39,14 +38,7 @@ function setup() {
 
     soundFile = new p5.SoundFile();
 
-    ngColor = color(random(0,255));
-    $('#rndHead').css('color', ngColor);
 }
-
-// function rndHeading(){
-//   ngColor = color(random(255));
-//   $('#rndHead').css('color', ngColor);
-// }
 
 function start() {
 
@@ -83,7 +75,6 @@ function next() {
 
     if (soundFile.isLoaded){
       flagCanvas = false;
-    //  mic.stop()
       capture = createCapture(VIDEO);
       capture.size(350, 300);
       capture.hide();
@@ -168,7 +159,6 @@ function delayedAlert() {
 function countdown(){
   var downloadTimer = setInterval(function(){
   duration--;
-  //document.getElementById("cco").textContent = count;
   $('#vidRec').html(duration);
   if(duration <= 0)
       clearInterval(downloadTimer);
@@ -218,7 +208,6 @@ function saveAthougt(blob){
 function loadVideo(){
   $("#fileLoader").click();
   fileLoad = createVideo();
-  //fileLoad.hide();
   console.log('video loaded')
 }
 
@@ -259,11 +248,3 @@ function draw() {
         flagCanvas = false;
     }
 }
-
-
-// //ANIMATIION HIDE
-// $('.message a').click(function () {
-//     $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
-// });
-
-//   //saveSound(soundFile, 'mySound.wav'); // save file
