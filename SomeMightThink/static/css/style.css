@@ -1,0 +1,26 @@
+/* tag, calls , id */
+
+#myContainer{
+    border: solid #42DCA3 1px;
+    visibility: hidden;
+}
+
+#myContainerTwo{
+    border: solid #42DCA3 1px;
+}
+
+#fileLoader
+{
+    display:none;
+}
+/*_____Buttons_____*/
+#next{display: none;}
+#vidRec{display: none;}
+#reTake{display: none;}
+#plyAll{display: none;}
+#share{display: none;}
+#countdowntimer{display: none;}
+#reDoBtn{display: none;}
+#save{display: none;}
+#uploadSound{display: block;}
+#btnOpenFileDialog{display: none;}
