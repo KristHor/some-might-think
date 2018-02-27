@@ -1,5 +1,5 @@
 var mic, recorder, soundFile, vol, reverb, micFill;
-var capture, stream, videoRecorder, fileLoad, blob;
+var capture, stream, videoRecorder, blob;
 var state = 0;
 var myCanvas, myCanvasTwo, vid;
 var flagStart = true;
@@ -12,11 +12,13 @@ var voiceDuration, duration;
 var timeoutID, crossOver, timeoutBtn;
 var chunks = [];
 
+
 document.getElementById("reTake").addEventListener("click", backToVoc);
 document.getElementById("rec").addEventListener("click", start);
 document.getElementById("save").addEventListener("click", save);
 document.getElementById("next").addEventListener("click", next);
 document.getElementById("reDoBtn").addEventListener("click", reLoad);
+document.getElementById("download").addEventListener("click", download);
 document.getElementById("plyAll").addEventListener("click", playAllMedia);
 
 function setup() {
@@ -34,7 +36,7 @@ function setup() {
     recorder = new p5.SoundRecorder();
     recorder.setInput(mic);
 
-    reverb = new p5.Reverb();
+    //reverb = new p5.Reverb();
 
     soundFile = new p5.SoundFile();
 
@@ -75,6 +77,7 @@ function next() {
 
     if (soundFile.isLoaded){
       flagCanvas = false;
+    //  mic.stop()
       capture = createCapture(VIDEO);
       capture.size(350, 300);
       capture.hide();
@@ -82,10 +85,9 @@ function next() {
       $('#myContainer').css('border', 'solid #42DCA3 1px');
       $('#next').css('display', 'none');
       $('#save').css('display', 'none');
-      $('#uploadSound').css('display', 'none');
       $('#reTake').css('display', 'none');
       $('#vidRec').css('display', 'block');
-      $('#btnOpenFileDialog').css('display', 'block');
+      $('#openLoadVideo').css('display', 'block');
 
       flagNextToUse = true;
       document.getElementById("duration").innerHTML = 'Now record motion or choose file';
@@ -127,6 +129,7 @@ function soundRecord() {
         recorder.record(soundFile);
         state++;
         $('#rec').html('Stop');
+        $('#openLoadSound').css('display', 'none');
         console.log('rec is stop');
         $('#myContainerTwo').css('border', 'solid red 1px');
     }
@@ -148,7 +151,12 @@ function soundRecord() {
 
 function save(){saveSound(soundFile, 'mySound.wav');}
 
-function loadSound(){console.log('sound loaded')}
+function loadSound(){
+//  $('#uploadSound').click();
+  alert('sss');
+  console.log('sound loaded')
+}
+
 
 function delayedAlert() {
   videoRecord();
@@ -166,11 +174,12 @@ function countdown(){
 }
 
 function videoRecord() {
-  $('#uploadVideo').css('display', 'none');
+  $('#videoLoader').css('display', 'none');
     chunks.length = 0;
-    let stream = document.querySelector('canvas').captureStream(30),
+    let stream = document.querySelector('canvas').captureStream(25),
         videoRecorder = new MediaRecorder(stream);
     soundFile.play();
+    console.log(videoRecorder.state);
     videoRecorder.ondataavailable = e => {
         if (e.data.size) {
             chunks.push(e.data);
@@ -195,19 +204,26 @@ function exportVideo(e) {
     $('#myContainerTwo').css('display', 'none');
     $('#vidRec').css('display', 'none');
     crossfade();
-    saveAthougt(blob);
 }
 
-function saveAthougt(blob){
-  if (blob){
-    var filesaver = new FileSaver(blob, "video.webm");
-  }
-
+//All nessisery??
+function download() {
+  var blob = new Blob(chunks, {type: 'video/mp4'});
+  var url = window.URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;
+  a.download = 'test.mp4';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function() {
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  }, 100);
 }
 
 function loadVideo(){
-  $("#fileLoader").click();
-  fileLoad = createVideo();
+  $("#videoLoader").click();
   console.log('video loaded')
 }
 
@@ -224,6 +240,7 @@ function playAllMedia() {
     $('#plyAll').css('display', 'block');
     $('#share').css('display', 'block');
     $('#reDoBtn').css('display', 'block');
+    $('#download').css('display', 'block');
     $('#myContainer').css('border', 'solid #42DCA3 1px');
     document.getElementById("duration").innerHTML = 'Happy with your thoughts?';
     //reverb.process(soundFile, 2, 2);
@@ -248,3 +265,4 @@ function draw() {
         flagCanvas = false;
     }
 }
+
