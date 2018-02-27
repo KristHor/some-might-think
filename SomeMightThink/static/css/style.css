@@ -9,11 +9,12 @@
     border: solid #42DCA3 1px;
 }
 
-#fileLoader
-{
-    display:none;
-}
+
 /*_____Buttons_____*/
+#videoLoader{display:none;}
+#uploadSound{display: none;}
+#openLoadVideo{display: none;}
+#openLoadSound{display: block;}
 #next{display: none;}
 #vidRec{display: none;}
 #reTake{display: none;}
@@ -22,5 +23,4 @@
 #countdowntimer{display: none;}
 #reDoBtn{display: none;}
 #save{display: none;}
-#uploadSound{display: block;}
-#btnOpenFileDialog{display: none;}
+#download{display: none;}
